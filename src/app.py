@@ -4,7 +4,6 @@ High School Management System API
 A super simple FastAPI application that allows students to view and sign up
 for extracurricular activities at Mergington High School.
 """
-jk
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
@@ -74,7 +73,8 @@ activities = {
         "schedule": "Wednesdays, 3:30 PM - 4:30 PM",
         "max_participants": 12,
         "participants": []
-    },
+    }
+}
 
 
 @app.get("/")
@@ -105,6 +105,11 @@ def signup_for_activity(activity_name: str, email: str):
     if len(activity["participants"]) >= activity["max_participants"]:
         raise HTTPException(status_code=400, detail="Activity is full")
 
+    #Validate the user has a student email that is a valid email address
+    if not email.endswith("@mergington.edu") or "@" not in email.split("@")[0]:
+        raise HTTPException(status_code=400, detail="Invalid student email address")
+
     # Add student
+
     activity["participants"].append(email)
     return {"message": f"Signed up {email} for {activity_name}"}
