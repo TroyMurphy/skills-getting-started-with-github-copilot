@@ -106,7 +106,7 @@ def signup_for_activity(activity_name: str, email: str):
         raise HTTPException(status_code=400, detail="Activity is full")
 
     #Validate the user has a student email that is a valid email address
-    if not email.endswith("@mergington.edu") or len(email.split("@") != 2:
+    if not email.endswith("@mergington.edu") or len(email.split("@")) != 2:
         raise HTTPException(status_code=400, detail="Invalid student email address")
 
     # Add student
